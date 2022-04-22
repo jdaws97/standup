@@ -8,7 +8,7 @@ If you add it as an alias, it's as simple as running:
 ```
 standup --open
 ```
-List of all possible araguments:
+List of all possible arguments:
 
 --open -> this will open the standup notes
 
