@@ -6,5 +6,5 @@ To add it as an alias, run the standup_alias.sh script
 
 If you add it as an alias, it's as simple as running:
 ```
-$standup --open
+standup --open
 ```
