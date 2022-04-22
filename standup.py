@@ -37,7 +37,7 @@ class Standup:
 
 
     def check_standup(self):
-        
+
         file = None
         self.check_path()
 
@@ -132,7 +132,7 @@ class Standup:
     def remove_old_standups(self):
         
         dates = []
-        for i in range(8):
+        for i in range(self.config['days']+1):
             day = (int(date.today().strftime('%d')) - i)
             newtime = date.today().strftime(f'%m-{day}-%Y')
             dates.append(str(newtime))
