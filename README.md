@@ -1,8 +1,8 @@
 # STANDUP
 
-Standup is a helpful CLI tool for Linux made with Python.
-
 Standup is a note taking tool for your standup meetings!
+
+It's a CLI tool made for Linux with Python
 
 To add it as an alias, run the standup_alias.sh script
 
