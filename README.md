@@ -11,6 +11,9 @@ standup --open
 List of all possible araguments:
 
 --open -> this will open the standup notes
+
 --config -> this will open the config file to change it
+
 --category -> options: DONE, IN-PROGRESS, BLOCKERS, NOTES
+
 sentence -> just write your sentence in double quotes
