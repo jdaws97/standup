@@ -23,7 +23,7 @@ class Standup:
         if path:
             if os.path.isdir(path):
                 try:
-                    os.chdir(self.config['path'])
+                    os.chdir(path)
                 except:
                     raise Exception ("The path in your config is NOT a proper path - \
                                     fix your config path")
