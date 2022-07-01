@@ -2,11 +2,11 @@ import argparse
 import json
 import os
 import sys
-from datetime import date
+from datetime import datetime, timedelta, date
 
 global DATE
 
-DATE = date.today().strftime('%m-%d-%Y')
+DATE = datetime.now().strftime('%m-%d-%Y')
 
 
 class Standup:
@@ -92,10 +92,10 @@ class Standup:
 
             if self.category == "NOTES":
                 place_line = i + start
-                data[place_line] = f"\t{self.sentence}\n\n"
+                data[place_line] = f"\t[{i-1}]: {self.sentence}\n\n"
             else:
                 place_line = i + start
-                data[place_line] = f"\t{self.sentence}\n\n"
+                data[place_line] = f"\t[{i-1}]: {self.sentence}\n\n"
 
             with open(f'standup_{DATE}.txt', 'w') as file:
                 file.writelines(data)
@@ -105,7 +105,6 @@ class Standup:
     def open_standup(self):
 
         self.check_path()
-
         if self.days_ago == 0:
             os.system(f"vi standup_{DATE}.txt")
         else:
@@ -128,21 +127,20 @@ class Standup:
 
         dates = []
         for i in range(self.config['days']+1):
-            day = (int(date.today().strftime('%d')) - i)
-            newtime = date.today().strftime(f'%m-{day}-%Y')
-            dates.append(str(newtime))
+            new_time = datetime.now() - timedelta(days=i)
+            new_time = new_time.strftime(f"%m-%d-%Y")
+            dates.append(str(new_time))
 
         # for time in dates:
         file_list = []
         os.chdir(self.config['path'])
-        for root, dirs, files in os.walk("/tmp"):
+        for root, dirs, files in os.walk(self.config['path']):
             for file in files:
                 if file.__contains__("standup") and file != 'standup-config.json':
                     for time in dates:
                         if file.__contains__(time):
                             file_list.append(file)
                             continue
-
         for root, dirs, files in os.walk(self.config['path']):
             for file in files:
                 if file.__contains__("standup") and file != 'standup-config.json':

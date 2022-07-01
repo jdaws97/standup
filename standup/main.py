@@ -4,13 +4,15 @@ import logging as log
 import os
 import subprocess
 
-from standup import Standup
+from standup.standup import Standup
 
-log.basicConfig(level=log.INFO, format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+log.basicConfig(level=log.INFO, format='%(asctime)s - %(message)s',
+                datefmt='%d-%b-%y %H:%M:%S')
 
 global CONFIG
 global EDITOR
-EDITOR = os.environ.get('EDITOR','vim')
+EDITOR = os.environ.get('EDITOR', 'vim')
+
 
 def parse_config() -> dict:
     '''
@@ -19,7 +21,7 @@ def parse_config() -> dict:
 
     os.chdir('/tmp')
 
-    with open("standup-config.json",'r') as file:
+    with open("standup-config.json", 'r') as file:
         config = json.load(file)
         return config
 
@@ -34,9 +36,9 @@ def check_config():
         for file in files:
             if file.__eq__("standup-config.json"):
                 return parse_config()
-            else:
-                create_config()
-                return parse_config()
+
+        create_config()
+        return parse_config()
 
 
 def create_config():
@@ -61,7 +63,7 @@ def main():
     # Check config
     CONFIG = check_config()
 
-    # Parse arguments 
+    # Parse arguments
     parser = argparse.ArgumentParser(description='This script is meant to be used as a CLI tool \
                                      for meeting notes for a daily standup')
 
@@ -108,7 +110,7 @@ def main():
     # Logic for determining how to delegate arguments being passed in to the script
     if args.sentence and category:
         if args.days_ago:
-            raise Exception ("You can't update an older standup file")
+            raise Exception("You can't update an older standup file")
         if args.open or args.config:
             log.info("--open --config should be standalone arguments")
         standup.append_standup()
@@ -116,8 +118,9 @@ def main():
         log.info("--open and --config should be standalone arguments")
     elif args.open and not args.config:
         standup.open_standup()
-    
+
     standup.remove_old_standups()
-    
+
+
 if __name__ == '__main__':
     main()
