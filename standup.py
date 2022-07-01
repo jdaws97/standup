@@ -8,6 +8,7 @@ global DATE
 
 DATE = date.today().strftime('%m-%d-%Y')
 
+
 class Standup:
 
     def __init__(self, category: str, sentence: str, days_ago: int, config: dict):
@@ -17,7 +18,6 @@ class Standup:
         self.days_ago = days_ago
         self.config = config
 
-
     def check_path(self, path: str = None):
 
         if path:
@@ -25,16 +25,15 @@ class Standup:
                 try:
                     os.chdir(path)
                 except:
-                    raise Exception ("The path in your config is NOT a proper path - \
+                    raise Exception("The path in your config is NOT a proper path - \
                                     fix your config path")
         else:
             if os.path.isdir(self.config['path']):
                 try:
                     os.chdir(self.config['path'])
                 except:
-                    raise Exception ("The path in your config is NOT a proper path - \
+                    raise Exception("The path in your config is NOT a proper path - \
                                     fix your config path")
-
 
     def check_standup(self):
 
@@ -55,8 +54,8 @@ class Standup:
         elif not file and self.days_ago == 0:
             self.create_standup()
         else:
-            raise Exception (f"There isn't a file from {self.days_ago} days ago")
-
+            raise Exception(
+                f"There isn't a file from {self.days_ago} days ago")
 
     def append_standup(self):
 
@@ -70,7 +69,7 @@ class Standup:
             category_to_stop = ''
             for lines in data:
                 if lines.__contains__(self.category):
-                    
+
                     categories = self.config['categories']
                     for x in range(len(categories)):
                         if categories[x].__contains__(self.category):
@@ -78,7 +77,7 @@ class Standup:
                                 category_to_stop = "stop"
                             else:
                                 category_to_stop = categories[x+1]
-                            
+
                     start += 1
                     break
                 start += 1
@@ -90,20 +89,18 @@ class Standup:
                 if current_line.strip().__contains__(category_to_stop):
                     break
                 i += 1
-                
+
             if self.category == "NOTES":
                 place_line = i + start
                 data[place_line] = f"\t{self.sentence}\n\n"
             else:
                 place_line = i + start
                 data[place_line] = f"\t{self.sentence}\n\n"
-                
 
             with open(f'standup_{DATE}.txt', 'w') as file:
                 file.writelines(data)
         else:
-            raise Exception ("You can't update an older file")
-
+            raise Exception("You can't update an older file")
 
     def open_standup(self):
 
@@ -116,7 +113,6 @@ class Standup:
             newtime = date.today().strftime(f'%m-{day}-%Y')
             os.system(f"vi standup_{newtime}.txt")
 
-
     def create_standup(self):
 
         with open(f'standup_{DATE}.txt', 'w') as file:
@@ -128,15 +124,14 @@ class Standup:
                     categories.append(category)
             file.writelines('\n\n\n'.join(categories))
 
-
     def remove_old_standups(self):
-        
+
         dates = []
         for i in range(self.config['days']+1):
             day = (int(date.today().strftime('%d')) - i)
             newtime = date.today().strftime(f'%m-{day}-%Y')
             dates.append(str(newtime))
-        
+
         # for time in dates:
         file_list = []
         os.chdir(self.config['path'])
@@ -153,4 +148,3 @@ class Standup:
                 if file.__contains__("standup") and file != 'standup-config.json':
                     if file not in file_list:
                         os.system(f'rm {file}')
-            
