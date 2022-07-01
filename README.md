@@ -26,3 +26,15 @@ List of all possible arguments:
 --category -> options: DONE, IN-PROGRESS, BLOCKERS, NOTES
 
 sentence -> just write your sentence in double quotes
+
+You can install it through pip!
+
+```
+pip install standup-note-taking
+```
+
+When you install it, add an alias to your .bashrc!
+
+```
+alias standup="python3 -m standup.main"
+```
