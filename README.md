@@ -36,5 +36,5 @@ pip install standup-note-taking
 When you install it, add an alias to your .bashrc!
 
 ```
-alias standup="python3 -m standup.main"
+echo "alias standup='python3 -m standup.main'" >> ~/.bashrc
 ```
