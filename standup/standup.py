@@ -45,8 +45,8 @@ class Standup:
                 if files.__eq__(f"standup_{DATE}.txt"):
                     file = files
             else:
-                day = (int(date.today().strftime('%d')) - self.days_ago)
-                newtime = date.today().strftime(f'%m-{day}-%Y')
+                newtime = datetime.now() - timedelta(days=self.days_ago)
+                newtime = newtime.strftime(f"%m-%d-%Y")
                 if files.__eq__(f"standup_{newtime}.txt"):
                     file = files
         if file:
@@ -108,8 +108,8 @@ class Standup:
         if self.days_ago == 0:
             os.system(f"vi standup_{DATE}.txt")
         else:
-            day = (int(date.today().strftime('%d')) - self.days_ago)
-            newtime = date.today().strftime(f'%m-{day}-%Y')
+            newtime = datetime.now() - timedelta(days=self.days_ago)
+            newtime = newtime.strftime(f"%m-%d-%Y")
             os.system(f"vi standup_{newtime}.txt")
 
     def create_standup(self):
